@@ -36,7 +36,7 @@ logger.addHandler(ch)
 
 class NetinstallAuditor:
     def __init__(self, log_name):
-        self.log_dir = f"/home/{os.getlogin()}/calamares-netinstall"
+        self.log_dir = f"/home/{os.getlogin()}/arcolinux-netinstall-explorer"
 
         logger.info(f"Creating log directory {self.log_dir}")
         os.makedirs(self.log_dir, exist_ok=True)
