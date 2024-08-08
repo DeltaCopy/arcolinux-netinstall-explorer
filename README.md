@@ -40,7 +40,7 @@ Category = netinstall-utilities | Packages = 139
 Packages total = 1123
 ```
 
-A text file is generated inside $HOME/arcolinux-netinstall-explorer
+A text file is generated inside `$HOME/arcolinux-netinstall-explorer`
 
 Truncated output.
 
