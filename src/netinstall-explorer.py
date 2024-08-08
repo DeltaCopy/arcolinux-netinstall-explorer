@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# This script verifies whether a package defined inside a Calamares netinstall yaml file, can be installed by Pacman
-
 import logging
 import os
 import shutil
