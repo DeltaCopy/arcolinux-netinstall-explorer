@@ -120,9 +120,13 @@ class NetinstallAuditor:
                     logger.info(f"Category = {category} | Packages = {len(packages)}")
                     total += len(packages)
 
-                    for package in packages:
-                        self.log_file.write(f" - {package}\n")
+                    if total > 0:
+                        for package in packages:
+                            self.log_file.write(f" - {package}\n")
 
+        print(
+            "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+        )
         logger.info(f"Packages total = {total}")
         logger.info(f"File = {self.filename}")
 
@@ -167,15 +171,34 @@ def main():
         if ret == 0:
             netinstall_auditor.process_files(f"{dest}/calamares/modules")
 
-            count = len(netinstall_auditor.search_results)
-
-            if count > 0:
-                print(f"############# Search results ({count}) #############")
+            if (
+                netinstall_auditor.search_term is not None
+                and len(netinstall_auditor.search_results) > 0
+            ):
+                print(
+                    f" ########################## Search results ({len(netinstall_auditor.search_results)}) ##########################"
+                )
 
                 for package in netinstall_auditor.search_results:
                     print(
                         f" - Package = {package.name} | Category = {package.category}"
                     )
+                print(
+                    " ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+                )
+            elif netinstall_auditor.search_term is not None:
+                print(
+                    f" ########################## Search results ({len(netinstall_auditor.search_results)}) ##########################"
+                )
+                print(f" - No results found for {netinstall_auditor.search_term}")
+
+                print(
+                    " ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+                )
+            else:
+                print(
+                    "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+                )
 
     else:
         parser.print_help()
