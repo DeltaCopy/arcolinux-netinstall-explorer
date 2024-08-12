@@ -10,6 +10,7 @@ Output a list of packages from Calamares netinstall YAML files
 options:
   -h, --help       show this help message and exit
   --config CONFIG  Choose from: arcopro-calamares-config, arconet-calamares-config, arcoplasma-calamares-config
+  --find FIND      Find package name
 ```
 
 ```sh
@@ -44,7 +45,7 @@ A text file is generated inside `$HOME/arcolinux-netinstall-explorer`
 
 Truncated output.
 
-````text
+```text
 ####### arconet-calamares-config package log #######
 ####### NETINSTALL-APPLICATIONS (46) #######
  - cheese
@@ -68,4 +69,13 @@ Truncated output.
  - arcolinux-pipemenus-git
  - conky-lua-archers
  ....
+ ```
+Finding a package.
+
+```sh
+./netinstall-explorer.py --config arconet-calamares-config --find firefox
+############# Search results (3) #############
+ - Package = firefox | Caregory = netinstall-internet
+ - Package = firefox-adblock-plus | Caregory = netinstall-internet
+ - Package = firefox-ublock-origin | Caregory = netinstall-internet
 ```
