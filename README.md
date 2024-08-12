@@ -12,6 +12,7 @@ options:
   --config CONFIG  Choose from: arcopro-calamares-config, arconet-calamares-config, arcoplasma-calamares-config
   --find FIND      Find package name
 ```
+## Generate list of packages
 
 ```sh
 ./netinstall-explorer.py --config arconet-calamares-config
@@ -70,7 +71,7 @@ Truncated output.
  - conky-lua-archers
  ....
  ```
-Finding a package.
+## Finding a package
 
 ```sh
 ./netinstall-explorer.py --config arconet-calamares-config --find firefox
