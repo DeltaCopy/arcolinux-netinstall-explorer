@@ -33,7 +33,15 @@ logger.addHandler(ch)
 
 
 class NetinstallAuditor:
-    def __init__(self, log_name):
+    def __init__(self, log_name, search_term):
+
+        self.search_term = None
+        self.search_results = []
+
+        if search_term is not None:
+            self.search_term = search_term
+            logger.info(f"Searching for package {self.search_term}")
+
         self.log_dir = f"/home/{os.getlogin()}/arcolinux-netinstall-explorer"
 
         logger.info(f"Creating log directory {self.log_dir}")
@@ -99,6 +107,11 @@ class NetinstallAuditor:
                         if line.startswith("    - "):
                             name = line.split("    - ")[1].strip()
                             if name not in packages:
+                                if self.search_term is not None:
+                                    if self.search_term in name:
+                                        self.search_results.append(
+                                            Package(name, category)
+                                        )
                                 packages.append(name)
 
                     self.log_file.write(
@@ -119,10 +132,6 @@ class Package:
         self.name = name
         self.category = category
 
-    def __lt__(self, other):
-        if other.name > self.name:
-            return other
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -135,13 +144,21 @@ def main():
         help="Choose from: arcopro-calamares-config, arconet-calamares-config, arcoplasma-calamares-config",
     )
 
+    parser.add_argument(
+        "--find",
+        help="Find package name",
+    )
+
     args = parser.parse_args()
 
     if args.config is not None:
 
         # clone the calamares-config repo for netinstall files
 
-        netinstall_auditor = NetinstallAuditor(args.config)
+        if args.find is not None:
+            netinstall_auditor = NetinstallAuditor(args.config, args.find.lower())
+        else:
+            netinstall_auditor = NetinstallAuditor(args.config, None)
         arco_git = f"https://github.com/arconetpro/{args.config}.git"
         dest = "/tmp/arco-calamares-config"
 
@@ -149,6 +166,16 @@ def main():
 
         if ret == 0:
             netinstall_auditor.process_files(f"{dest}/calamares/modules")
+
+            count = len(netinstall_auditor.search_results)
+
+            if count > 0:
+                print(f"############# Search results ({count}) #############")
+
+                for package in netinstall_auditor.search_results:
+                    print(
+                        f" - Package = {package.name} | Category = {package.category}"
+                    )
 
     else:
         parser.print_help()
