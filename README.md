@@ -76,7 +76,7 @@ Truncated output.
 ```sh
 ./netinstall-explorer.py --config arconet-calamares-config --find firefox
 ############# Search results (3) #############
- - Package = firefox | Caregory = netinstall-internet
- - Package = firefox-adblock-plus | Caregory = netinstall-internet
- - Package = firefox-ublock-origin | Caregory = netinstall-internet
+ - Package = firefox | Category = netinstall-internet
+ - Package = firefox-adblock-plus | Category = netinstall-internet
+ - Package = firefox-ublock-origin | Category = netinstall-internet
 ```
